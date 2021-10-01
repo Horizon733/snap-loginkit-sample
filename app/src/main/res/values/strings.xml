@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Login kit Sample</string>
+    <string name="snapchat_client_id">Your client id</string>
+    <string-array name="snap_connect_scopes">
+        <item>https://auth.snapchat.com/oauth2/api/user.bitmoji.avatar</item>
+        <item>https://auth.snapchat.com/oauth2/api/user.display_name</item>
+    </string-array>
+</resources>

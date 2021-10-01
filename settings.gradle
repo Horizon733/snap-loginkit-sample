@@ -1,0 +1,13 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://storage.googleapis.com/snap-kit-build/maven"
+        }
+        // Warning: this repository is going to shut down soon
+    }
+}
+rootProject.name = "Login kit Sample"
+include ':app'
