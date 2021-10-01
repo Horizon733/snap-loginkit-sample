@@ -41,6 +41,7 @@ import com.snapchat.kit.sdk.core.controller.LoginStateController.OnLoginStateCha
 
 val username = mutableStateOf("")
 val bitmoji = mutableStateOf("")
+val is_logged_in = mutableStateOf(false)
 
 class MainActivity : ComponentActivity() {
     private lateinit var mLoginStateChangedListener: OnLoginStateChangedListener
@@ -58,6 +59,7 @@ class MainActivity : ComponentActivity() {
         mLoginStateChangedListener = object: OnLoginStateChangedListener{
             override fun onLoginSucceeded() {
                 getUserDetails(this@MainActivity)
+                is_logged_in.value = SnapLogin.isUserLoggedIn(this@MainActivity)
             }
 
             override fun onLoginFailed() {
@@ -67,6 +69,7 @@ class MainActivity : ComponentActivity() {
 
             override fun onLogout() {
                 Toast.makeText(this@MainActivity, "Logged out!", Toast.LENGTH_LONG).show()
+                is_logged_in.value = SnapLogin.isUserLoggedIn(this@MainActivity)
             }
 
         }
@@ -84,7 +87,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
-    val is_logged_in = SnapLogin.isUserLoggedIn(context)
+    is_logged_in.value = SnapLogin.isUserLoggedIn(context)
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -93,7 +96,7 @@ fun MainScreen() {
     ) {
         Image(
             painter = rememberImagePainter(
-                bitmoji.value,
+                if (is_logged_in.value) bitmoji.value else "",
                 builder = {
                     transformations(CircleCropTransformation())
                 }
@@ -107,7 +110,7 @@ fun MainScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = username.value,
+            value = if (is_logged_in.value) username.value else "",
             onValueChange = { username.value = it },
             placeholder = { Text("Display Name", color = Color.LightGray) }
         )
@@ -115,7 +118,11 @@ fun MainScreen() {
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                SnapLogin.getAuthTokenManager(context).startTokenGrant()
+                if(is_logged_in.value){
+                    SnapLogin.getAuthTokenManager(context).clearToken()
+                }else {
+                    SnapLogin.getAuthTokenManager(context).startTokenGrant()
+                }
             },
             shape = MaterialTheme.shapes.large,
             colors = ButtonDefaults.buttonColors(backgroundColor = SnapbtnColor),
@@ -129,7 +136,11 @@ fun MainScreen() {
                 tint = Color.White
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text("Login with Snapchat")
+            if (is_logged_in.value){
+                Text("Log out")
+            }else {
+                Text("Login with Snapchat")
+            }
 
         }
     }
