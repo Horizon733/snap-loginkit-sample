@@ -6,7 +6,7 @@
 - To try out this sample app, you need to use [Android Studio Arctic Fox](https://developer.android.com/studio).
 - You can clone this repository.
 
-🧬 Samples
+🧬 Sample
 ------------
 
 | Project | Sample |
