@@ -21,9 +21,7 @@
 ```
 - Make sure to change project name in `AndroidManifest.xml`
 ```xml
-<application
-...
- >
+<application ...>
 ...
 <meta-data
     android:name="com.snapchat.kit.sdk.redirectUrl"
