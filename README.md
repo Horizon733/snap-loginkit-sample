@@ -1,3 +1,5 @@
+<p align="center"><img src="https://user-images.githubusercontent.com/57827233/137875987-48a56729-501e-44f1-a85d-133886479072.png" width="220"></p>
+
 <h1 align="center">Snap Login kit Sample</h1>
 <p align="center">An android app that demonstrates Snapchat's Login kit integration with Jetpack compose</p>
 
